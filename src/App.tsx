@@ -13,6 +13,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
             <Route path="home" element={<Home />} />
             <Route path="recipes" element={<Recipes />} />
           </Route>
@@ -40,14 +41,14 @@ html {
   @media ${DEVICE.tablet} {
     font-size: 48%;
   }
+  @media ${DEVICE.desktop} {
+    font-size: 62.5%;
+  }
 }
 
 body {
   padding: 0.8rem;
   margin: 0;
-  @media ${DEVICE.mobile} {
-    padding: 0;
-  }
 }
 
 p, h1, h2, h3 {

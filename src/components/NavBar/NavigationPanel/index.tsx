@@ -21,36 +21,41 @@ const NavigationPanel = () => {
 };
 
 const NavigationPanelWrapper = styled.div`
-  background-color: ${COLORS["gray-100"]};
-  width: inherit;
-  border-radius: 0.8rem;
+  background-color: ${COLORS["gray-50"]};
   position: fixed;
-  top: 13.6rem;
-  @media ${DEVICE.mobile} {
-    width: initial;
-    height: 7.2rem;
-    top: initial;
-    bottom: 0.8rem;
-    left: 0.8rem;
-    right: 0.8rem;
-    border-radius: 3.2rem;
-    display: flex;
-    align-items: center;
+  @media ${DEVICE.tablet} {
+    width: inherit;
+    top: 13.6rem;
+    height: initial;
+    display: block;
+    border-radius: 0.8rem;
   }
+
+  width: initial;
+  height: 7.2rem;
+  top: initial;
+  bottom: 0.8rem;
+  left: 0.8rem;
+  right: 0.8rem;
+  border-radius: 3.2rem;
+  display: flex;
+  align-items: center;
 `;
 
 const LinkBox = styled.nav`
-  margin: 3.2rem 2.8rem;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0 3.2rem;
+  height: initial;
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  gap: 3.2rem;
-  height: calc(100dvh - 21rem);
-  @media ${DEVICE.mobile} {
-    flex-direction: row;
-    justify-content: space-between;
-    margin: 0 3.2rem;
-    height: initial;
-    width: 100%;
+
+  @media ${DEVICE.tablet} {
+    flex-direction: column;
+    justify-content: flex-start;
+    margin: 3.2rem 2.8rem;
+    gap: 3.2rem;
+    height: calc(100dvh - 21rem);
   }
 `;
 

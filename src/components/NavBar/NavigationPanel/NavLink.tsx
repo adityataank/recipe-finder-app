@@ -10,7 +10,7 @@ import CommunityIcon from "../../UI/Icons/NavIcons/Community";
 import SavedIcon from "../../UI/Icons/NavIcons/Saved";
 import SettingsIcon from "../../UI/Icons/NavIcons/Settings";
 
-import { DEVICE } from "../../../utils/constants";
+import { COLORS, DEVICE } from "../../../utils/constants";
 
 interface NavLinkProps {
   name: string;
@@ -42,7 +42,7 @@ const NavLink = ({ name, linkKey }: NavLinkProps) => {
         type="row"
         style={{ "justify-content": "flex-start", gap: "1.2rem" }}
       >
-        <SvgWrapper>{IconMapping[linkKey]}</SvgWrapper>
+        {IconMapping[linkKey]}
         <Text styles={{ "font-weight": "500" }} type="small">
           {name}
         </Text>
@@ -53,46 +53,44 @@ const NavLink = ({ name, linkKey }: NavLinkProps) => {
 
 const CustomLink = styled(Link)<{ isActive: boolean }>`
   text-decoration: none;
-  color: ${(props) => (props.isActive ? "#089B12" : "#647181")};
+  color: ${(props) =>
+    props.isActive ? COLORS["green-600"] : COLORS["gray-600"]};
   svg {
     path {
-      fill: ${(props) => (props.isActive ? "#089B12" : "#AAB1BB")};
+      fill: ${(props) =>
+        props.isActive ? COLORS["green-600"] : COLORS["gray-300"]};
     }
   }
-  @media ${DEVICE.desktop} {
+  &:last-child {
+    margin-top: initial;
+  }
+  p {
+    display: none;
+  }
+  svg {
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+  @media ${DEVICE.tablet} {
+    svg {
+      width: 2rem;
+      height: 2rem;
+    }
+    p {
+      display: block;
+    }
     &:last-child {
       margin-top: auto;
-    }
-  }
-  @media ${DEVICE.mobile} {
-    p {
-      display: none;
     }
   }
   ${(props) =>
     !props.isActive &&
     `:hover {
-    color: #44505f;
+    color: ${COLORS["gray-700"]};
     svg path {
-      fill: #727e8d;
+      fill: ${COLORS["gray-500"]};
     }
   }`}
-`;
-
-const SvgWrapper = styled.span`
-  width: 2rem;
-  height: 2rem;
-  display: grid;
-  place-items: center;
-  align-content: center;
-  svg {
-    @media ${DEVICE.tablet} {
-      transform: scale(0.8);
-    }
-    @media ${DEVICE.mobile} {
-      transform: scale(1.2);
-    }
-  }
 `;
 
 export default NavLink;

@@ -20,12 +20,13 @@ const NavBarWrapper = styled.div`
   align-items: flex-start;
   justify-content: flex-start;
   gap: 0.8rem;
-  width: 26rem;
-  height: calc(100dvh - 1.6rem);
-  position: fixed;
-  left: 0.8rem;
-  @media ${DEVICE.mobile} {
-    width: 100%;
+  width: 100%;
+  @media ${DEVICE.tablet} {
+    width: 26rem;
+    height: calc(100dvh - 1.6rem);
+    position: fixed;
+    top: 0.8rem;
+    left: 0.8rem;
   }
 `;
 

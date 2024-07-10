@@ -32,6 +32,7 @@ const P = styled.p`
   font-size: var(--font-size);
   line-height: var(--line-height);
   font-weight: var(--font-weight, 400);
+  color: var(--color, 000);
 `;
 
 export default Text;

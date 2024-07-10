@@ -19,6 +19,7 @@ const Wrapper = styled.div<{ flexDirection: string }>`
   flex-direction: ${(props) => props.flexDirection};
   align-items: var(--align-items, center);
   justify-content: var(--justify-content, center);
+  gap: var(--gap);
 `;
 
 export default FlexBox;

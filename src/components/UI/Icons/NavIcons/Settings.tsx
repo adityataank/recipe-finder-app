@@ -7,7 +7,7 @@ const SettingsIcon = () => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clip-path="url(#clip0_2608_1049)">
+      <g clip-path="url(#clip0_1227_9685)">
         <path
           fill-rule="evenodd"
           clip-rule="evenodd"
@@ -16,7 +16,7 @@ const SettingsIcon = () => {
         />
       </g>
       <defs>
-        <clipPath id="clip0_2608_1049">
+        <clipPath id="clip0_1227_9685">
           <rect width="20" height="20" fill="white" />
         </clipPath>
       </defs>

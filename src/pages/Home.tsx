@@ -1,11 +1,10 @@
 import styled from "styled-components";
-
-import SearchSection from "../components/SearchSection";
+import HeadlineOne from "../components/UI/Headlines/HeadlineOne";
 
 function Home() {
   return (
     <PageWrapper>
-      <SearchSection />
+      <HeadlineOne>Home page</HeadlineOne>
     </PageWrapper>
   );
 }
