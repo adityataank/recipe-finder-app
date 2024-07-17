@@ -3,22 +3,24 @@ import NavBar from "../components/NavBar";
 import styled from "styled-components";
 import { DEVICE } from "../utils/constants";
 import SearchSection from "../components/SearchSection";
+import FlexBox from "../components/UI/FlexBox";
 
 function Layout() {
   return (
     <LayoutWrapper>
       <NavBar />
-      <SearchSection />
-      <PageWrapper>
-        <Outlet />
-      </PageWrapper>
+      <FlexBox type="column" gap="3.2rem">
+        <SearchSection />
+        <PageWrapper>
+          <Outlet />
+        </PageWrapper>
+      </FlexBox>
     </LayoutWrapper>
   );
 }
 
 const LayoutWrapper = styled.main`
-  height: calc(100dvh - 5.8rem);
-  padding-top: 10rem;
+  padding-top: 9.2rem;
   @media ${DEVICE.tablet} {
     margin-left: 26.8rem;
     padding: 0 4rem;
@@ -36,7 +38,15 @@ const LayoutWrapper = styled.main`
 `;
 
 const PageWrapper = styled.div`
-  
+  height: calc(100dvh - 24rem);
+  overflow: auto;
+  // &::-webkit-scrollbar {
+  //   display: none;
+  // }
+  width: 100%;
+  @media ${DEVICE.tablet} {
+    height: calc(100dvh - 14.4rem);
+  }
 `;
 
 export default Layout;

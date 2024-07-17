@@ -1,30 +1,102 @@
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 
-import HeadlineOne from "../UI/Headlines/HeadlineOne";
 import SearchBar from "../SearchBar";
 import FlexBox from "../UI/FlexBox";
+import Modal from "../UI/Modal";
+import Headline from "../UI/Headline";
+import RecipeFilterSection from "../RecipeFilterSection";
+
 import { DEVICE } from "../../utils/constants";
 
+interface SearchModalProps {
+  open: boolean;
+  handleClose: () => void;
+  query: string;
+}
+
+const ModalStyles = {
+  placement: { top: "6.4rem" },
+  width: "100%",
+  height: "100%",
+};
+
+const SearchModal = ({ open, handleClose, query }: SearchModalProps) => (
+  <Modal
+    open={open}
+    handleClose={handleClose}
+    position="absolute"
+    styles={ModalStyles}
+  >
+    <RecipeFilterSection startSearch={open} query={query} />
+  </Modal>
+);
+
+// -------------------------------------------------------------------------------------------
+
 const SearchSection = () => {
+  const [isFocused, setIsFocused] = useState<boolean>(false);
+  const [query, setQuery] = useState<string>("");
+  const [openSearchModal, setOpenSearchModal] = useState<boolean>(false);
+
   const { pathname } = useLocation();
-  const isHomePage = pathname.length === 1 || pathname.startsWith("/home");
+  const isHomePage: boolean =
+    pathname.length === 1 || pathname.startsWith("/home");
+
+  const expandSearchBar: boolean =
+    openSearchModal || Boolean(isFocused || query);
+
+  useEffect(() => {
+    if (isFocused) {
+      setOpenSearchModal(true);
+    }
+  }, [isFocused, query]);
+
   return (
-    <FlexBox style={{ "justify-content": "space-between" }}>
-      <SearchWrapper hideSearch={isHomePage}>
-        <HeadlineOne styles={{ "font-weight": "normal" }}>
+    <FlexBox justify="between" align="center">
+      <SearchModal
+        open={openSearchModal}
+        handleClose={() => setOpenSearchModal(false)}
+        query={query}
+      />
+
+      <HeadlineWrapper hideSearch={isHomePage} shrinkHeadline={expandSearchBar}>
+        <Headline
+          styles={{ weight: 400, color: "#000000" }}
+          type={{ mobile: "h1", desktop: "h1" }}
+        >
           Discover Recipes
-        </HeadlineOne>
-      </SearchWrapper>
-      <SearchBar />
+        </Headline>
+      </HeadlineWrapper>
+      <FlexBox justify="end">
+        <SearchBar
+          isFocused={isFocused}
+          setIsFocused={setIsFocused}
+          query={query}
+          setQuery={setQuery}
+          setOpenSearchModal={setOpenSearchModal}
+          expandSearchBar={expandSearchBar}
+        />
+      </FlexBox>
     </FlexBox>
   );
 };
-const SearchWrapper = styled.div<{ hideSearch: boolean }>`
+
+// -------------------------------------------------------------------------------------------
+
+const HeadlineWrapper = styled.div<{
+  hideSearch: boolean;
+  shrinkHeadline: boolean;
+}>`
   display: none;
   @media ${DEVICE.tablet} {
     display: block;
+    h1 {
+      white-space: nowrap;
+    }
   }
+  ${({ shrinkHeadline }) => shrinkHeadline && "width: 0;"}
 `;
 
 export default SearchSection;

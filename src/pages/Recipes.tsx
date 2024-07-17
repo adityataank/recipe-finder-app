@@ -1,9 +1,5 @@
-import HeadlineOne from "../components/UI/Headlines/HeadlineOne"
-
 const Recipes = () => {
-  return (
-    <HeadlineOne>Recipes</HeadlineOne>
-  )
-}
+  return <p>Recipes</p>;
+};
 
-export default Recipes
+export default Recipes;

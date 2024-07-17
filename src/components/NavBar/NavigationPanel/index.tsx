@@ -23,6 +23,7 @@ const NavigationPanel = () => {
 const NavigationPanelWrapper = styled.div`
   background-color: ${COLORS["gray-50"]};
   position: fixed;
+  z-index: 1;
   @media ${DEVICE.tablet} {
     width: inherit;
     top: 13.6rem;
@@ -49,7 +50,6 @@ const LinkBox = styled.nav`
   height: initial;
   width: 100%;
   display: flex;
-
   @media ${DEVICE.tablet} {
     flex-direction: column;
     justify-content: flex-start;

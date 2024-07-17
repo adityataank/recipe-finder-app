@@ -35,15 +35,18 @@ const NavLink = ({ name, linkKey }: NavLinkProps) => {
   };
 
   const toPath: string = `/${linkKey}`;
+  const textColor: string = checkActiveLink()
+    ? COLORS["green-600"]
+    : COLORS["gray-600"];
 
   return (
     <CustomLink to={toPath} isActive={checkActiveLink()}>
-      <FlexBox
-        type="row"
-        style={{ "justify-content": "flex-start", gap: "1.2rem" }}
-      >
+      <FlexBox justify="start" align="center" gap="1.2rem">
         {IconMapping[linkKey]}
-        <Text styles={{ "font-weight": "500" }} type="small">
+        <Text
+          styles={{ weight: 500, color: textColor }}
+          type={{ mobile: "small", desktop: "small" }}
+        >
           {name}
         </Text>
       </FlexBox>
@@ -53,8 +56,6 @@ const NavLink = ({ name, linkKey }: NavLinkProps) => {
 
 const CustomLink = styled(Link)<{ isActive: boolean }>`
   text-decoration: none;
-  color: ${(props) =>
-    props.isActive ? COLORS["green-600"] : COLORS["gray-600"]};
   svg {
     path {
       fill: ${(props) =>
@@ -71,6 +72,14 @@ const CustomLink = styled(Link)<{ isActive: boolean }>`
     width: 2.4rem;
     height: 2.4rem;
   }
+  ${(props) =>
+    !props.isActive &&
+    `:hover {
+    p {color: ${COLORS["gray-700"]};}
+    svg path {
+      fill: ${COLORS["gray-500"]};
+    }
+  }`}
   @media ${DEVICE.tablet} {
     svg {
       width: 2rem;
@@ -83,14 +92,6 @@ const CustomLink = styled(Link)<{ isActive: boolean }>`
       margin-top: auto;
     }
   }
-  ${(props) =>
-    !props.isActive &&
-    `:hover {
-    color: ${COLORS["gray-700"]};
-    svg path {
-      fill: ${COLORS["gray-500"]};
-    }
-  }`}
 `;
 
 export default NavLink;

@@ -24,7 +24,7 @@ function App() {
 }
 
 const GlobalStyles = createGlobalStyle`
-:root {
+:root, * {
   font-family: "DM Sans", sans-serif;
   font-optical-sizing: auto;
   line-height: 1.5;
@@ -34,6 +34,8 @@ const GlobalStyles = createGlobalStyle`
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  box-sizing: border-box;
 }
 
 html {
@@ -49,11 +51,18 @@ html {
 body {
   padding: 0.8rem;
   margin: 0;
+  // disabling the tap effect on mobiles.
+  -webkit-tap-highlight-color: transparent;
 }
 
 p, h1, h2, h3 {
   margin: 0
 }
+
+button, a {
+  cursor: pointer;
+}
+
 `;
 
 export default App;

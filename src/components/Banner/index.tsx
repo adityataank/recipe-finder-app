@@ -10,46 +10,61 @@ import LogoIcon from "../../assets/logo.svg";
 
 function BrandBanner() {
   return (
-    <BannerWrapper>
-      <FlexBox type="row" style={{ gap: "1.2rem" }}>
-        <Image src={LogoIcon} width={4} height={4} alt="logo" />
-        <FlexBox type="column" style={{ "align-items": "start" }}>
-          <Text
-            styles={{
-              "--color": COLORS["white"],
-              "font-weight": "900",
-              "line-height": "2rem",
-            }}
-            type="large"
-          >
-            Meal Deal
-          </Text>
-          <Text styles={{ color: COLORS["gray-300"] }} type="tiny">
-            Recipes for healthy life
-          </Text>
+    <Wrapper>
+      <BannerWrapper>
+        <FlexBox gap="1.2rem" justify="center" align="center">
+          <Image src={LogoIcon} width={4} height={4} alt="logo" />
+          <FlexBox type="column" align="start" justify="center">
+            <Text
+              type={{ mobile: "large", desktop: "large" }}
+              styles={{
+                color: COLORS["white"],
+                weight: 900,
+              }}
+            >
+              Meal Deal
+            </Text>
+            <Text
+              styles={{ color: COLORS["gray-300"] }}
+              type={{ mobile: "tiny", desktop: "tiny" }}
+            >
+              Recipes for healthy life
+            </Text>
+          </FlexBox>
         </FlexBox>
-      </FlexBox>
-    </BannerWrapper>
+      </BannerWrapper>
+    </Wrapper>
   );
 }
 
+const Wrapper = styled.div`
+  height: 8.8rem;
+  z-index: 10;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 0.8rem;
+  padding-bottom: 0;
+  @media ${DEVICE.tablet} {
+    width: 26.8rem;
+    height: 12.8rem;
+    padding: 0.8rem 0 0 0.8rem;
+    img {
+      width: 4.8rem;
+      height: 4.8rem;
+    }
+  }
+`;
+
 const BannerWrapper = styled.div`
   height: 8rem;
-  display: flex;
   padding-left: 2.4rem;
-  top: 0.8rem;
-  left: 0.8rem;
-  right: 0.8rem;
-  z-index: 10000;
-  position: fixed;
   background-color: var(--background-color, ${COLORS["primary-black"]});
   border-radius: 0.8rem;
   @media ${DEVICE.tablet} {
-    width: inherit;
-    height: 12rem;
-    display: grid;
-    place-items: center;
-    padding: 0;
+    width: 100%;
+    height: 100%;
     img {
       width: 4.8rem;
       height: 4.8rem;

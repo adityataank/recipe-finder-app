@@ -5,7 +5,7 @@ import { COLORS } from "../../../utils/constants";
 
 interface ContainerProps {
   children: React.ReactNode;
-  styles: {
+  styles?: {
     [key: string]: string | number;
   };
 }
@@ -19,6 +19,7 @@ const Wrapper = styled.div`
   width: var(--width);
   height: var(--height);
   border-radius: var(--border-radius, 0.8rem);
+  background-image: var(--background-image, none);
 `;
 
 export default Container;

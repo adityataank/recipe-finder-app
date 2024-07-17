@@ -1,47 +1,83 @@
-import { useState, useRef } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import styled from "styled-components";
 
 import SearchIcon from "../UI/Icons/SearchIcon";
-import CloseIcon from "../UI/Icons/CloseIcon/CloseIcon";
+import CloseIcon from "../UI/Icons/CloseIcon";
 
-import { COLORS, DEVICE } from "../../utils/constants";
+import { COLORS, DEVICE, OVERLAY_Z_INDEX } from "../../utils/constants";
+import { debounce } from "../../lib/debounce";
 
-const SearchBar = () => {
-  const [isFocused, setIsFocused] = useState<boolean>(false);
-  const [query, setQuery] = useState<string>("");
+interface SearchBarProps {
+  isFocused?: boolean;
+  setIsFocused?: (isFocused: boolean) => void;
+  query: string;
+  setQuery: (query: string) => void;
+  setOpenSearchModal?: (state: boolean) => void;
+  expandSearchBar: boolean;
+}
 
+const SearchBar = ({
+  isFocused = false,
+  setIsFocused = () => {},
+  query = "",
+  setQuery = () => {},
+  setOpenSearchModal = () => {},
+  expandSearchBar = false,
+}: SearchBarProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
+  const [inputText, setInputText] = useState<string>("");
+
   const handleFocus = () => setIsFocused(true);
-  const handleBlur = () => setIsFocused(false);
+  const handleBlur = () => {
+    setIsFocused(false);
+  };
 
-  const handleQuery = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setQuery(e?.target?.value || "");
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const debouncedHandleChange = useCallback(
+    debounce((event: React.ChangeEvent<HTMLInputElement>) => {
+      setQuery(event.target.value);
+    }, 500),
+    []
+  );
 
-  const handleIconClick = () => {
-    if (query) {
+  // resetting every state
+  const handleClose = () => {
+    if (expandSearchBar) {
+      setOpenSearchModal(false);
+      setIsFocused(false);
       setQuery("");
-      inputRef?.current?.blur();
-    } else {
-      inputRef?.current?.focus();
+      setInputText("");
     }
   };
 
-  const Icon = isFocused || query ? CloseIcon : SearchIcon;
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val: string = e.target.value;
+    setInputText(val);
+    if (val === "") {
+      return setQuery(val);
+    }
+    debouncedHandleChange(e);
+  };
+
+  const Icon = isFocused || inputText ? <CloseIcon /> : <SearchIcon />;
 
   return (
-    <Wrapper isFocused={isFocused}>
+    <Wrapper
+      isFocused={isFocused}
+      isSearched={Boolean(query)}
+      expandSearchBar={expandSearchBar}
+    >
       <Input
-        value={query}
+        value={inputText}
         placeholder="Search for any recipe"
         onFocus={handleFocus}
         onBlur={handleBlur}
-        onChange={handleQuery}
+        onChange={handleInput}
         ref={inputRef}
+        isFocused={isFocused}
       />
-      <span onClick={handleIconClick}>
-        <Icon />
-      </span>
+      <IconWrapper onClick={handleClose}>{Icon}</IconWrapper>
     </Wrapper>
   );
 };
@@ -53,22 +89,21 @@ const changeBackground = (color: string | number, isImp?: boolean) => {
     }`;
 };
 
-const Wrapper = styled.form<{ isFocused: boolean }>`
+const Wrapper = styled.form<{
+  isFocused: boolean;
+  isSearched: boolean;
+  expandSearchBar: boolean;
+}>`
+  z-index: ${OVERLAY_Z_INDEX + 1};
   height: 5.6rem;
   border-radius: 0.8rem;
   border: 0.1rem solid
     ${(props) => (props.isFocused ? COLORS["green-600"] : COLORS["gray-200"])};
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 2rem;
-  span {
-    svg {
-      width: 2rem;
-      height: 2rem;
-    }
-    cursor: pointer;
-  }
+  display: grid;
+  grid-template-columns: auto 6rem;
+  background: ${COLORS.white};
+  transition: all 150ms linear;
+  width: 100%;
   &:hover {
     ${changeBackground(COLORS["gray-50"], false)}
     svg {
@@ -77,17 +112,19 @@ const Wrapper = styled.form<{ isFocused: boolean }>`
       }
     }
   }
-  width: 100%;
+
   @media ${DEVICE.tablet} {
     width: 30rem;
   }
   @media ${DEVICE.laptop} {
-    width: 40.6rem;
+    width: 44.8rem;
   }
+
   ${(props) =>
     props.isFocused &&
     `
-    box-shadow: 0px 0px 0px 4px #15C4213D;
+    transition: all 300ms linear;
+    box-shadow: 0 0 0 .4rem #15C4213D;
       ${changeBackground(COLORS["white"], true)}
       &:hover {
       svg {
@@ -96,22 +133,49 @@ const Wrapper = styled.form<{ isFocused: boolean }>`
       }}
     }
     `}
+  ${(props) =>
+    props.expandSearchBar &&
+    `@media ${DEVICE.tablet} {
+      width: 100%;
+    }`}
+  ${(props) => props.isSearched && "width: 100% !important;"}
 `;
 
-const Input = styled.input`
-  height: 90%;
-  width: calc(100% - 4rem);
+const Input = styled.input<{ isFocused: boolean }>`
+  height: 100%;
   font-size: 1.8rem;
   line-height: 2.4rem;
+  letter-spacing: -0.01em;
   color: ${COLORS["primary-black"]};
   outline: none;
   border: none;
-  letter-spacing: 0.05rem;
-  &:focus {
-  }
+  border-radius: 0.8rem 0 0 0.8rem;
+  padding-left: 2rem;
+  transition: all 150ms linear;
   &::placeholder {
     color: ${COLORS["gray-400"]};
   }
+  &:hover {
+    &::placeholder {
+      color: ${COLORS["gray-500"]};
+    }
+  }
+
+  ${(props) => props.isFocused && "transition: all 300ms linear;"}
+`;
+
+const IconWrapper = styled.span`
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 0 2rem;
+  border-radius: 0 0.8rem 0.8rem 0;
+  svg {
+    width: 2rem;
+    height: 2rem;
+  }
+  cursor: pointer;
 `;
 
 export default SearchBar;

@@ -1,38 +1,53 @@
+import React from "react";
 import styled from "styled-components";
 
+import { LargeText, BaseText, SmallText, TinyText } from "../../../styles/text";
+import { DEVICE } from "../../../utils/constants";
+
 interface TextProps {
-  children: string;
-  styles: { [key: string]: string | number };
-  type: string;
+  children: string | React.ReactNode;
+  type: {
+    mobile: "large" | "base" | "small" | "tiny";
+    tablet?: "large" | "base" | "small" | "tiny";
+    desktop: "large" | "base" | "small" | "tiny";
+  };
+  styles?: { color?: string; weight?: number };
 }
 
-const Text = ({ children, styles, type = "base" }: TextProps) => {
-  const stylesObject: { [key: string]: { [key: string]: string | number } } = {
-    large: {
-      "font-size": "2rem",
-      "line-height": "2.8rem",
-    },
-    base: {
-      "font-size": "1.8rem",
-      "line-height": "2.4rem",
-    },
-    small: {
-      "font-size": "1.6rem",
-      "line-height": "2.4rem",
-    },
-    tiny: {
-      "font-size": "1.4rem",
-      "line-height": "2rem",
-    },
-  };
-  return <P style={{ ...stylesObject[type], ...styles }}>{children}</P>;
+type StyleProps = {
+  type: { [key: string]: string };
+  weight?: number;
+  color?: string;
 };
 
-const P = styled.p`
-  font-size: var(--font-size);
-  line-height: var(--line-height);
-  font-weight: var(--font-weight, 400);
-  color: var(--color, 000);
-`;
+// ----------------------------------------------------------------------
 
+const Text = ({ children, type, styles = {} }: TextProps) => {
+  const { color = "", weight = 400 } = styles;
+
+  return (
+    <TextWrapper type={type} color={color} weight={weight}>
+      {children}
+    </TextWrapper>
+  );
+};
+
+// ----------------------------------------------------------------------
+
+const getStyles = (type: string) =>
+  type === "large"
+    ? LargeText
+    : type === "base"
+    ? BaseText
+    : type === "small"
+    ? SmallText
+    : TinyText;
+
+const TextWrapper = styled.p<StyleProps>`
+  ${({ type: { mobile } }) => getStyles(mobile)}
+
+  @media ${DEVICE.tablet} {
+    ${({ type: { desktop } }) => getStyles(desktop)}
+  }
+`;
 export default Text;
