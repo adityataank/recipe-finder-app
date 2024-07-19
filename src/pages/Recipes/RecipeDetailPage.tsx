@@ -11,11 +11,11 @@ import RecipeTags from "../../components/RecipeDetailPage/RecipeTags";
 import Ingredients from "../../components/RecipeDetailPage/Ingredients";
 import Instructions from "../../components/RecipeDetailPage/Instructions";
 import Loader from "../../components/UI/Loader";
+import MoreRecipes from "../../components/RecipeDetailPage/MoreRecipes";
 
 import { REQUEST } from "../../utils/request/request";
 import { API_ROUTES } from "../../utils/request/api-routes";
 import { COLORS, DEVICE } from "../../utils/constants";
-import MoreRecipes from "../../components/RecipeDetailPage/MoreRecipes";
 import { SmallText } from "../../styles/text";
 
 const RecipeDetailPage = () => {
