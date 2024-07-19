@@ -10,6 +10,7 @@ import ButtonsGroup from "../../components/RecipeDetailPage/ButtonsGroup";
 import RecipeTags from "../../components/RecipeDetailPage/RecipeTags";
 import Ingredients from "../../components/RecipeDetailPage/Ingredients";
 import Instructions from "../../components/RecipeDetailPage/Instructions";
+import Loader from "../../components/UI/Loader";
 
 import { REQUEST } from "../../utils/request/request";
 import { API_ROUTES } from "../../utils/request/api-routes";
@@ -23,6 +24,7 @@ const RecipeDetailPage = () => {
   const instructionsSectionRef = useRef<HTMLDivElement>(null);
 
   const [recipeData, setRecipeData] = useState<{ [key: string]: string }>({});
+  const [isFetching, setIsFetching] = useState<boolean>(false);
 
   const {
     strMealThumb,
@@ -36,6 +38,7 @@ const RecipeDetailPage = () => {
   useEffect(() => {
     const fetchRecipe = async () => {
       try {
+        setIsFetching(true);
         const response = await REQUEST.get(
           API_ROUTES.get_recipe_details(mealId)
         );
@@ -54,6 +57,8 @@ const RecipeDetailPage = () => {
         }
       } catch (error) {
         console.error(error);
+      } finally {
+        setIsFetching(false);
       }
     };
     if (mealId) {
@@ -100,7 +105,9 @@ const RecipeDetailPage = () => {
     </DescriptionTextWrapper>
   );
 
-  return (
+  return isFetching ? (
+    <Loader />
+  ) : (
     recipeData?.idMeal && (
       <PageWrapper>
         <TopSection>
