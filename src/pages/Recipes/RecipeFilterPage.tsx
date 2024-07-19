@@ -25,21 +25,21 @@ const EndpointMapping: EndpointMappingTypes = {
 };
 
 const RecipeFilterPage = () => {
-  const [categories, setCategories] = useState<[]>([]);
+  const [apiData, setApiData] = useState<[]>([]);
   const [isFetching, setIsFetching] = useState<boolean>(false);
 
   const { filter = "category" } = useParams<{ filter: Filtertypes }>();
 
   useEffect(() => {
-    const fetchCategories = async () => {
+    const fetchData = async () => {
       try {
         setIsFetching(true);
         const response = await REQUEST.get(EndpointMapping[filter]);
         if (response) {
           if (filter === "category") {
-            setCategories(response?.categories);
+            setApiData(response?.categories);
           } else {
-            setCategories(response?.meals);
+            setApiData(response?.meals);
           }
         }
       } catch (error) {
@@ -48,21 +48,19 @@ const RecipeFilterPage = () => {
         setIsFetching(false);
       }
     };
-    fetchCategories();
+    fetchData();
   }, [filter]);
 
-  const renderCategories = () =>
+  const renderApiData = () =>
     isFetching ? (
       <SkeletonGroup type={filter} />
     ) : (
       Children.toArray(
-        [...categories, ...categories].map((category: MealProps) => (
-          <DataBlock data={category} tab={filter} />
-        ))
+        apiData?.map((data: MealProps) => <DataBlock data={data} tab={filter} />)
       )
     );
 
-  return <PageWrapper>{renderCategories()}</PageWrapper>;
+  return <PageWrapper>{renderApiData()}</PageWrapper>;
 };
 
 const PageWrapper = styled.section`

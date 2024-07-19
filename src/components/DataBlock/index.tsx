@@ -70,11 +70,18 @@ const DataBlock = ({ data, tab, showSkeleton = false }: PropsTypes) => {
     },
   };
 
+  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+    if(showSkeleton) {
+      e?.stopPropagation();
+      e?.preventDefault();
+    }
+  }
+
   const filterValue = ComponentMapping[tab].value;
-  const route = `/recipes/${tab}/${filterValue}`;
+  const route = showSkeleton ? "" : `/recipes/${tab}/${filterValue}`;
 
   return (
-    <Wrapper to={route} height="18rem" showSkeleton={showSkeleton}>
+    <Wrapper to={route} height="18rem" showSkeleton={showSkeleton} onClick={handleClick}>
       {showSkeleton ? <></> : ComponentMapping[tab].component}
     </Wrapper>
   );
