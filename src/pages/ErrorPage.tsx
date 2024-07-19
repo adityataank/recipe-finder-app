@@ -8,7 +8,9 @@ import RouteLink from "../components/UI/RouteLink";
 const ErrorPage = () => {
   return (
     <PageWrapper>
-      <Image src={ErrorImage} width="30rem" height="auto" alt="error" />
+      <ImageWrapper>
+        <Image src={ErrorImage} width="100%" height="auto" alt="error" />
+      </ImageWrapper>
       <Text>
         We couldn’t find the page you’re looking for, or it’s currently in
         development.
@@ -31,6 +33,11 @@ const PageWrapper = styled.section`
   align-items: center;
   padding-top: 10rem;
   height: fit-content;
+`;
+
+const ImageWrapper = styled.div`
+  width: 30rem;
+  height: 20.36rem;
 `;
 
 const Text = styled.div`
