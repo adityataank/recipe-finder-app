@@ -43,7 +43,7 @@ List any prerequisites that must be installed for the project to work, for examp
 ### Clone the Repository
 
 ```sh
-git clone https://github.com/your-username/your-repo.git
+git clone https://github.com/adityataank/recipe-finder-app.git
 
 cd recipe-finder-app
 ```
