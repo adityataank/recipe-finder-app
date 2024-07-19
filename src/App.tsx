@@ -61,13 +61,14 @@ html {
   @media ${DEVICE.desktop} {
     font-size: 62.5%;
   }
-  @media ${DEVICE.mobile} {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-    ::-webkit-scrollbar { 
-      display: none;
-    }
+  
+  // hiding the scrollbar
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  ::-webkit-scrollbar { 
+    display: none;
   }
+  
 }
 
 body {
