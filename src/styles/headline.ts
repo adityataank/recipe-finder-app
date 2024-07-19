@@ -8,8 +8,8 @@ interface HeadlineProps {
 
 const CommonStyles = css<HeadlineProps>`
   font-weight: ${(props) => props.weight};
-  letter-spacing: -0.01em;
   color: ${(props) => props.color || COLORS["primary-black"]};
+  letter-spacing: -0.01em;
 `;
 
 export const H1 = css<HeadlineProps>`

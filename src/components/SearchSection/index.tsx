@@ -41,8 +41,7 @@ const SearchSection = () => {
   const [openSearchModal, setOpenSearchModal] = useState<boolean>(false);
 
   const { pathname } = useLocation();
-  const isHomePage: boolean =
-    pathname.length === 1 || pathname.startsWith("/home");
+  const isHomePage: boolean = pathname.length === 1 || pathname === "/";
 
   const expandSearchBar: boolean =
     openSearchModal || Boolean(isFocused || query);
@@ -52,6 +51,12 @@ const SearchSection = () => {
       setOpenSearchModal(true);
     }
   }, [isFocused, query]);
+
+  useEffect(() => {
+    if (pathname) {
+      setOpenSearchModal(false);
+    }
+  }, [pathname]);
 
   return (
     <FlexBox justify="between" align="center">

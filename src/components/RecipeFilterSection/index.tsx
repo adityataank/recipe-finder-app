@@ -10,9 +10,9 @@ import {
   AllowedTabs,
   COLORS,
   DEVICE,
-  MealProps,
   RECIPE_FILTERS,
 } from "../../utils/constants";
+import { MealProps } from "../../utils/component-interfaces";
 import { REQUEST } from "../../utils/request/request";
 import { API_ROUTES } from "../../utils/request/api-routes";
 import DataBlock from "../DataBlock";

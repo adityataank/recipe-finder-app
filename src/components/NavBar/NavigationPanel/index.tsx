@@ -12,7 +12,7 @@ const NavigationPanel = () => {
       <LinkBox>
         {Children.toArray(
           NAV_LINKS.map((link) => (
-            <NavLink name={link.name} linkKey={link.key} />
+            <NavLink name={link.name} linkKey={link.key} route={link.route} />
           ))
         )}
       </LinkBox>

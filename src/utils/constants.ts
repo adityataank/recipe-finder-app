@@ -49,18 +49,6 @@ export const TRANSITIONS = {
   "in-out-back": "cubic-bezier(0.68, -0.55, 0.27, 1.55)",
 };
 
-// Meal card props types
-export interface MealProps {
-  idMeal: string;
-  strMeal: string;
-  strCategory: string;
-  strArea: string;
-  strMealThumb: string;
-  strTags: string;
-  strCategoryThumb: string;
-  strIngredient: string;
-}
-
 // unicodes for country flags
 export const COUNTRY_FLAGS: { [key: string]: string } = {
   American: "🇺🇸",

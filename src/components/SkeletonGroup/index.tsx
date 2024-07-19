@@ -8,7 +8,7 @@ interface PropsTypes {
 
 const SkeletonGroup = ({ type = "recipes" }: PropsTypes) => {
   const isRecipe = type === "recipes";
-  const count = isRecipe ? 4 : 12;
+  // const count = isRecipe ? 4 : 12;
   const RenderCard = () =>
     isRecipe ? (
       <SkeletonCard />
@@ -17,7 +17,7 @@ const SkeletonGroup = ({ type = "recipes" }: PropsTypes) => {
     );
   const renderSkeletons = () =>
     Children.toArray(
-      Array(count)
+      Array(12)
         .fill(0)
         .map(() => <RenderCard />)
     );

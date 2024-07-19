@@ -9,7 +9,6 @@ interface TextProps {
 const CommonStyles = css<TextProps>`
   color: ${(props) => props.color || COLORS["primary-black"]};
   font-weight: ${(props) => props.weight || 400};
-  text-align: center;
 `;
 
 export const LargeText = css<TextProps>`

@@ -1,18 +1,20 @@
+import { Children } from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 import Image from "../UI/Image";
-import Text from "../UI/Text";
 import FlexBox from "../UI/FlexBox";
 import RecipeOverview from "../RecipeMeta/RecipeOverview";
 import RecipeTag from "../RecipeMeta/RecipeTag";
 
-import { DEVICE, MealProps } from "../../utils/constants";
+import { DEVICE } from "../../utils/constants";
 import {
   DetailsWrapperStyles,
   ImageWrapperStyles,
   MealCardWrapperStyles,
 } from "../../styles/meal-card";
 import { BaseText, LargeText } from "../../styles/text";
+import { MealProps, TagProps } from "../../utils/component-interfaces";
 
 interface MealCardProps {
   data: MealProps;
@@ -20,31 +22,28 @@ interface MealCardProps {
 
 const DishImage = ({ src, alt }: { src: string; alt: string }) => (
   <ImageWrapper>
-    <Image src={src} width={15} height={12} alt={alt} />
+    <Image src={src} width="15rem" height="12rem" alt={alt} />
   </ImageWrapper>
 );
 
-const Details = ({ name, tags }: { name: string; tags: [string, string] }) => {
+const renderTags = (tags: TagProps) =>
+  Children.toArray(
+    Object.entries(tags).map(
+      ([key, value]) => value && <RecipeTag filter={key}>{value}</RecipeTag>
+    )
+  );
+
+const Details = ({ name, tags }: { name: string; tags: TagProps }) => {
   return (
     <DetailsWrapper>
       <FlexBox type="column" gap="0.4rem">
-        <EllipsisWrapper>
-          {/* <Text
-            type={{ mobile: "base", desktop: "large" }}
-            styles={{ weight: 500 }}
-          > */}
-          {name}
-          {/* </Text> */}
-        </EllipsisWrapper>
+        <EllipsisWrapper>{name}</EllipsisWrapper>
         <FlexBox gap="2rem">
           <RecipeOverview type="time" value="2h 30m" />
           <RecipeOverview type="difficulty" value="Advance" />
         </FlexBox>
       </FlexBox>
-      <FlexBox gap="0.4rem">
-        <RecipeTag>{tags[0]}</RecipeTag>
-        <RecipeTag>{tags[1]}</RecipeTag>
-      </FlexBox>
+      <FlexBox gap="0.4rem">{renderTags(tags)}</FlexBox>
     </DetailsWrapper>
   );
 };
@@ -57,18 +56,24 @@ const MealCard = ({ data }: MealCardProps) => {
     strMealThumb: thumbSrc,
     strCategory: category,
     strArea: area,
+    idMeal: id,
   } = data ?? {};
+
+  const recipeDetailPageRoute = encodeURI(
+    `/recipes/category/${category}/detail/${id}`
+  );
+
   return (
-    <CardWrapper>
+    <CardWrapper to={recipeDetailPageRoute}>
       <DishImage src={thumbSrc} alt={name} />
-      <Details name={name} tags={[category, area]} />
+      <Details name={name} tags={{ category, area }} />
     </CardWrapper>
   );
 };
 
 // -----------------------------------------------------------------------------------
 
-const CardWrapper = styled.div`
+const CardWrapper = styled(Link)`
   ${MealCardWrapperStyles}
 `;
 

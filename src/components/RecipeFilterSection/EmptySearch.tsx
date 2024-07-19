@@ -25,7 +25,7 @@ const SearchPrompt = () => (
 
 const NoResults = () => (
   <FlexBox type="column" align="center" width="auto" height="auto" gap="1.6rem">
-    <Image src={EmptyIcon} width={11.2} height={11.2} alt="empty" />
+    <Image src={EmptyIcon} width="11.2rem" height="11.2rem" alt="empty" />
     <Text type={{ mobile: "tiny", desktop: "tiny" }}>{noResultsText}</Text>
   </FlexBox>
 );

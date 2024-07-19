@@ -9,11 +9,20 @@ import {
   HOME_RECIPE_WIDGET_BACKGROUND_IMAGE,
 } from "../../utils/constants";
 import Image from "../UI/Image";
+import { useNavigate } from "react-router-dom";
 
 const TEMP_IMAGE =
   "https://s3-alpha-sig.figma.com/img/8f76/ce19/777b8ffd0e6987f13822a8a3600f922b?Expires=1721606400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=BaP-8ATAc1MrskMmbRjWztnhUw~1inUlJ3FPviRtNfCe-VbHBmHLNyCDxq4DRMUzazABWV0hlh30l3esG6OzVLR5GXYEid5mt2P5nilTNI8CwCas~O8NyB8wD~FcpwIiVSWDE3~EPckUmi5Nc~MRNmFa80ylsDbJsvXxttkUseTA~ZYv0qxl4D4wimo6WflIGBGdfP4Eb8t1GfaPu7q0RUsWrZ~zuQvaQey3YsdFgiJjHNg-Hjg92KqMqrr4C5qLWAoWVzewkwz63ovmZJyJfsrJFi89mvj1jIMS37QHd9KrGipbBic6-xAiGLI0VMR8ntxpsG5Vpvac1kdCztBNSg__";
 
 const HomeRecipeWidget = () => {
+  const navigate = useNavigate();
+
+  const handleViewRecipe = () => {
+    // having temporary route for now
+    const tempRoute = "/recipes/category/Vegetarian/detail/53073";
+    navigate(tempRoute);
+  };
+
   return (
     <Wrapper>
       <SubWrapper>
@@ -26,12 +35,14 @@ const HomeRecipeWidget = () => {
               Poached eggs with <br />
               broccoli and avocado
             </Headline>
-            <Button text="View Recipe" type="primary" />
+            <Button type="primary" handleClick={handleViewRecipe}>
+              View Recipe
+            </Button>
           </FlexBox>
         </Content>
       </SubWrapper>
       <ImageWrapper>
-        <Image src={TEMP_IMAGE} width={12.6} height={10.9} alt="dish" />
+        <Image src={TEMP_IMAGE} width="12.6rem" height="10.9rem" alt="dish" />
       </ImageWrapper>
     </Wrapper>
   );
@@ -89,6 +100,12 @@ const ImageWrapper = styled.div`
   }
   @media ${DEVICE.tablet} {
     top: 16.6rem;
+  }
+  @media (min-width: 710px) {
+  right: 7rem;
+    img {
+      transform: scale(1.8);
+    }
   }
   @media (min-width: 890px) {
     top: 1.5rem;

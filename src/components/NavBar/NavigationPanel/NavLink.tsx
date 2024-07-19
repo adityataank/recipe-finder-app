@@ -15,6 +15,7 @@ import { COLORS, DEVICE } from "../../../utils/constants";
 interface NavLinkProps {
   name: string;
   linkKey: string;
+  route: string;
 }
 
 // mapping side nav icons with link key.
@@ -26,15 +27,15 @@ const IconMapping: { [key: string]: React.ReactNode } = {
   "saved-recipes": <SavedIcon />,
 };
 
-const NavLink = ({ name, linkKey }: NavLinkProps) => {
+const NavLink = ({ name, linkKey, route }: NavLinkProps) => {
   const { pathname } = useLocation();
 
   const checkActiveLink = () => {
     const path = pathname.split("/");
-    return path[1] === linkKey || (!path[1] && linkKey === "home");
+    return (linkKey === "home" && pathname === "/") || path[1] === linkKey;
   };
 
-  const toPath: string = `/${linkKey}`;
+  const toPath: string = `${route}`;
   const textColor: string = checkActiveLink()
     ? COLORS["green-600"]
     : COLORS["gray-600"];

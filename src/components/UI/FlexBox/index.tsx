@@ -8,6 +8,7 @@ interface FlexBoxProps {
   align?: "strech" | "start" | "center" | "end" | "baseline";
   width?: "auto" | "100%";
   height?: "auto" | "100%";
+  styles?: { [key: string]: string };
 }
 
 type FlexWrapperProps = {
@@ -40,6 +41,7 @@ function FlexBox({
   align = "start",
   width = "100%",
   height = "100%",
+  styles = {},
 }: FlexBoxProps) {
   const justifyContent = FlexPropsMapping[justify];
   const alignItems = FlexPropsMapping[align];
@@ -51,6 +53,7 @@ function FlexBox({
       alignItems={alignItems}
       width={width}
       height={height}
+      style={styles}
     >
       {children}
     </Wrapper>

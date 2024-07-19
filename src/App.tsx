@@ -3,7 +3,12 @@ import { createGlobalStyle } from "styled-components";
 
 import Layout from "./pages/Layout";
 import Home from "./pages/Home";
-import Recipes from "./pages/Recipes";
+import RecipesLayout from "./pages/Recipes/RecipesLayout";
+import RecipeDetailPage from "./pages/Recipes/RecipeDetailPage";
+import RecipeFilterPage from "./pages/Recipes/RecipeFilterPage";
+import FilteredMealsPage from "./pages/Recipes/FilteredMealsPage";
+import ErrorPage from "./pages/ErrorPage";
+
 import { DEVICE } from "./utils/constants";
 
 function App() {
@@ -14,8 +19,18 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
-            <Route path="home" element={<Home />} />
-            <Route path="recipes" element={<Recipes />} />
+            <Route path="recipes" element={<RecipesLayout />}>
+              <Route path=":filter" element={<RecipeFilterPage />} />
+              <Route
+                path=":filter/:filterValue"
+                element={<FilteredMealsPage />}
+              />
+              <Route
+                path=":filter/:filterValue/detail/:mealId"
+                element={<RecipeDetailPage />}
+              />
+            </Route>
+            <Route path="*" element={<ErrorPage />} />
           </Route>
         </Routes>
       </BrowserRouter>
@@ -61,6 +76,7 @@ p, h1, h2, h3 {
 
 button, a {
   cursor: pointer;
+  text-decoration: none;
 }
 
 `;

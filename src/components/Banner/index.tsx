@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 import Image from "../UI/Image";
 import Text from "../UI/Text";
@@ -7,13 +8,18 @@ import FlexBox from "../UI/FlexBox";
 import { COLORS, DEVICE } from "../../utils/constants";
 
 import LogoIcon from "../../assets/logo.svg";
+import { useLocation } from "react-router-dom";
 
 function BrandBanner() {
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const pageName: string = pathname.split("/")[1];
+
   return (
-    <Wrapper>
+    <Wrapper page={pageName} onClick={() => navigate("/")}>
       <BannerWrapper>
         <FlexBox gap="1.2rem" justify="center" align="center">
-          <Image src={LogoIcon} width={4} height={4} alt="logo" />
+          <Image src={LogoIcon} width="4rem" height="4rem" alt="logo" />
           <FlexBox type="column" align="start" justify="center">
             <Text
               type={{ mobile: "large", desktop: "large" }}
@@ -37,7 +43,7 @@ function BrandBanner() {
   );
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ page?: string }>`
   height: 8.8rem;
   z-index: 10;
   position: fixed;
@@ -46,7 +52,10 @@ const Wrapper = styled.div`
   right: 0;
   padding: 0.8rem;
   padding-bottom: 0;
+  cursor: pointer;
+  display: ${(props) => (!props.page ? "block" : "none")};
   @media ${DEVICE.tablet} {
+    display: block;
     width: 26.8rem;
     height: 12.8rem;
     padding: 0.8rem 0 0 0.8rem;

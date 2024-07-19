@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 interface ImageProps {
   src: string;
-  width: number;
-  height: number;
+  width: string;
+  height: string;
   alt: string;
 }
 
@@ -15,11 +15,11 @@ function Image(props: ImageProps) {
 }
 
 const Wrapper = styled.img<{
-  width: number;
-  height: number;
+  width: string;
+  height: string;
 }>`
-  width: ${(props) => props.width}rem;
-  height: ${(props) => props.height}rem;
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
 `;
 
 export default Image;

@@ -3,19 +3,20 @@ import { Children, useEffect, useState } from "react";
 
 import HomeRecipeWidget from "../components/HomeRecipeWidget";
 import FlexBox from "../components/UI/FlexBox";
-
-import { DEVICE, MealProps } from "../utils/constants";
-import Headline from "../components/UI/Headline";
-import RouteLink from "../components/UI/RouteLink";
+import SkeletonGroup from "../components/SkeletonGroup";
 import MealCard from "../components/MealCard";
+import RouteLink from "../components/UI/RouteLink";
+import Headline from "../components/UI/Headline";
+
+import { DEVICE } from "../utils/constants";
 import { REQUEST } from "../utils/request/request";
 import { API_ROUTES } from "../utils/request/api-routes";
-import SkeletonGroup from "../components/SkeletonGroup";
+import { MealProps } from "../utils/component-interfaces";
 
 const Header = () => (
   <FlexBox justify="between" align="center">
     <Headline type={{ mobile: "h3", desktop: "h2" }}>New Recipes</Headline>
-    <RouteLink href="/recipes" rightArrow>
+    <RouteLink href="/recipes/category" rightArrow>
       See all recipes
     </RouteLink>
   </FlexBox>
@@ -40,7 +41,7 @@ function Home() {
 
   const fetchRecipes = async () => {
     try {
-      const response = await REQUEST.get(API_ROUTES.search_by_name("cheese")); // hard coding recipe name as latest meals API is not free.
+      const response = await REQUEST.get(API_ROUTES.search_by_name("prawn")); // hard coding recipe name as latest meals API is not free.
       if (response?.meals?.length) {
         setMeals(response.meals.slice(0, 4));
       }

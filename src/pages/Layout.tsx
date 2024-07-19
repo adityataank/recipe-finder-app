@@ -1,17 +1,23 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
+
 import NavBar from "../components/NavBar";
 import styled from "styled-components";
-import { DEVICE } from "../utils/constants";
 import SearchSection from "../components/SearchSection";
 import FlexBox from "../components/UI/FlexBox";
 
+import { DEVICE } from "../utils/constants";
+
 function Layout() {
+  const { pathname } = useLocation();
+  const pageName = pathname.split("/")[1];
   return (
-    <LayoutWrapper>
+    <LayoutWrapper page={pageName}>
       <NavBar />
       <FlexBox type="column" gap="3.2rem">
-        <SearchSection />
-        <PageWrapper>
+        <SearchWrapper hideSearch={pageName === "recipes"}>
+          <SearchSection />
+        </SearchWrapper>
+        <PageWrapper page={pageName}>
           <Outlet />
         </PageWrapper>
       </FlexBox>
@@ -19,8 +25,8 @@ function Layout() {
   );
 }
 
-const LayoutWrapper = styled.main`
-  padding-top: 9.2rem;
+const LayoutWrapper = styled.main<{ page: string }>`
+  padding-top: ${(props) => (!props.page ? "9.2rem" : "0")};
   @media ${DEVICE.tablet} {
     margin-left: 26.8rem;
     padding: 0 4rem;
@@ -37,15 +43,22 @@ const LayoutWrapper = styled.main`
   }
 `;
 
-const PageWrapper = styled.div`
-  height: calc(100dvh - 24rem);
+const PageWrapper = styled.div<{ page: string }>`
+  height: calc(100dvh - ${(props) => (!props.page ? "24rem" : "8rem")});
   overflow: auto;
-  // &::-webkit-scrollbar {
-  //   display: none;
-  // }
   width: 100%;
   @media ${DEVICE.tablet} {
-    height: calc(100dvh - 14.4rem);
+    height: calc(100dvh - 15.2rem);
+    margin-top: ${(props) => (props.page ? "0.8rem" : "0.4rem")};
+    ${(props) => props.page && "overflow: hidden;"}
+  }
+`;
+
+const SearchWrapper = styled.div<{ hideSearch: boolean }>`
+  width: 100%;
+  display: ${(props) => (props.hideSearch ? "none" : "block")};
+  @media ${DEVICE.tablet} {
+    display: block;
   }
 `;
 
