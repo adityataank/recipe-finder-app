@@ -5,7 +5,7 @@ import FlexBox from "../UI/FlexBox";
 import RouteLink from "../UI/RouteLink";
 
 import { H3 } from "../../styles/headline";
-import { COLORS, DEVICE } from "../../utils/constants";
+import { COLORS } from "../../utils/constants";
 import { MealProps } from "../../utils/component-interfaces";
 import { REQUEST } from "../../utils/request/request";
 import { API_ROUTES } from "../../utils/request/api-routes";
