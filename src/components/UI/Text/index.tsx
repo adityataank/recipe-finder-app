@@ -5,7 +5,7 @@ import { LargeText, BaseText, SmallText, TinyText } from "../../../styles/text";
 import { DEVICE } from "../../../utils/constants";
 
 interface TextProps {
-  children: string | React.ReactElement;
+  children: string | React.ReactElement | React.ReactNode;
   type: {
     mobile: "large" | "base" | "small" | "tiny";
     tablet?: "large" | "base" | "small" | "tiny";

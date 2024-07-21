@@ -7,6 +7,12 @@ import FlexBox from "../components/UI/FlexBox";
 
 import { DEVICE } from "../utils/constants";
 
+const pageHeight: { [key: string]: string } = {
+  home: "24rem",
+  recipes: "8rem",
+  "saved-recipes": "12rem",
+};
+
 function Layout() {
   const { pathname } = useLocation();
   const pageName = pathname.split("/")[1];
@@ -44,7 +50,7 @@ const LayoutWrapper = styled.main<{ page: string }>`
 `;
 
 const PageWrapper = styled.div<{ page: string }>`
-  height: calc(100dvh - ${(props) => (!props.page ? "24rem" : "8rem")});
+  height: calc(100dvh - ${(props) => pageHeight[props.page] ?? "24rem"});
   overflow: auto;
   width: 100%;
   @media ${DEVICE.tablet} {

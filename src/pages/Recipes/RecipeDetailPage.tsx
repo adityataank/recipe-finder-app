@@ -15,7 +15,7 @@ import MoreRecipes from "../../components/RecipeDetailPage/MoreRecipes";
 
 import { REQUEST } from "../../utils/request/request";
 import { API_ROUTES } from "../../utils/request/api-routes";
-import { COLORS, DEVICE } from "../../utils/constants";
+import { COLORS, DEVICE, LOCALSTORAGE_KEYS } from "../../utils/constants";
 import { SmallText } from "../../styles/text";
 
 const RecipeDetailPage = () => {
@@ -25,6 +25,7 @@ const RecipeDetailPage = () => {
 
   const [recipeData, setRecipeData] = useState<{ [key: string]: string }>({});
   const [isFetching, setIsFetching] = useState<boolean>(false);
+  const [isSaved, setIsSaved] = useState<boolean>(false);
 
   const {
     strMealThumb,
@@ -33,6 +34,7 @@ const RecipeDetailPage = () => {
     strArea,
     strInstructions,
     strYoutube,
+    idMeal,
   } = recipeData;
 
   useEffect(() => {
@@ -63,9 +65,22 @@ const RecipeDetailPage = () => {
     };
     if (mealId) {
       fetchRecipe();
+      const savedRecipes = JSON.parse(
+        localStorage.getItem(LOCALSTORAGE_KEYS.savedRecipes) ?? "{}"
+      );
+      if (mealId in savedRecipes) {
+        setIsSaved(true);
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mealId]);
+
+  const handleLocalStorage = {
+    getSavedRecipes: () =>
+      JSON.parse(localStorage.getItem(LOCALSTORAGE_KEYS.savedRecipes) ?? "{}"),
+    setSavedRecipes: (savedRecipes: []) =>
+      localStorage.setItem(LOCALSTORAGE_KEYS.savedRecipes, JSON.stringify(savedRecipes)),
+  };
 
   const goToRecipe = () => {
     if (instructionsSectionRef.current) {
@@ -77,11 +92,24 @@ const RecipeDetailPage = () => {
     }
   };
 
-  const saveRecipe = () => {};
+  const saveRecipe = () => {
+    const savedRecipes = handleLocalStorage.getSavedRecipes();
+    savedRecipes[idMeal] = recipeData;
+    handleLocalStorage.setSavedRecipes(savedRecipes);
+    setIsSaved(true);
+  };
+
+  const removeSavedRecipe = () => {
+    const savedRecipes = handleLocalStorage.getSavedRecipes();
+    delete savedRecipes[idMeal];
+    handleLocalStorage.setSavedRecipes(savedRecipes);
+    setIsSaved(false);
+  };
 
   const clickHandlers = {
     goToRecipe,
     saveRecipe,
+    removeSavedRecipe,
   };
 
   const RecipeName = () => (
@@ -121,7 +149,7 @@ const RecipeDetailPage = () => {
                 <RecipeTags tags={{ category: strCategory, area: strArea }} />
               </FlexBox>
             </FlexBox>
-            <ButtonsGroup clickHandlers={clickHandlers} />
+            <ButtonsGroup clickHandlers={clickHandlers} isSaved={isSaved} />
           </FlexBox>
         </TopSection>
         <InstructionsWrapper ref={instructionsSectionRef}>
