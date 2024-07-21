@@ -46,7 +46,7 @@ const SavedRecipes = () => {
   return (
     <>
       <Headline type={{ mobile: "h3", desktop: "h2" }}>
-        Your favorite recipes
+        Your favourite recipes
       </Headline>
       <Wrapper isEmpty={isEmpty}>
         {isEmpty ? <NoSavedRecipes /> : renderMeals()}
