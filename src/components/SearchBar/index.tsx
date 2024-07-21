@@ -41,7 +41,7 @@ const SearchBar = ({
     []
   );
 
-  // resetting every state
+  // resetting every state on close
   const handleClose = () => {
     if (expandSearchBar) {
       setOpenSearchModal(false);
@@ -77,7 +77,7 @@ const SearchBar = ({
         ref={inputRef}
         isFocused={isFocused}
       />
-      <IconWrapper onClick={handleClose}>{Icon}</IconWrapper>
+      <IconWrapper onMouseDown={handleClose}>{Icon}</IconWrapper>
     </Wrapper>
   );
 };
@@ -164,7 +164,7 @@ const Input = styled.input<{ isFocused: boolean }>`
   ${(props) => props.isFocused && "transition: all 300ms linear;"}
 `;
 
-const IconWrapper = styled.span`
+const IconWrapper = styled.div`
   display: grid;
   place-items: center;
   width: 100%;

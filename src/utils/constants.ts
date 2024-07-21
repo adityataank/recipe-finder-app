@@ -81,3 +81,8 @@ export const COUNTRY_FLAGS: { [key: string]: string } = {
   Unknown: "❓",
   Vietnamese: "🇻🇳",
 };
+
+// keys for getting and setting items in localstorage
+export const LOCALSTORAGE_KEYS = {
+  savedRecipes: "savedRecipes",
+};

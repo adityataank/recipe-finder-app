@@ -8,6 +8,7 @@ import RecipeDetailPage from "./pages/Recipes/RecipeDetailPage";
 import RecipeFilterPage from "./pages/Recipes/RecipeFilterPage";
 import FilteredMealsPage from "./pages/Recipes/FilteredMealsPage";
 import ErrorPage from "./pages/ErrorPage";
+import SavedRecipes from "./pages/SavedRecipes";
 
 import { DEVICE } from "./utils/constants";
 
@@ -30,6 +31,7 @@ function App() {
                 element={<RecipeDetailPage />}
               />
             </Route>
+            <Route path="saved-recipes" element={<SavedRecipes />} />
             <Route path="*" element={<ErrorPage />} />
           </Route>
         </Routes>

@@ -16,7 +16,7 @@ const ErrorPage = () => {
         development.
         <br /> Stay tuned for exciting updates!
       </Text>
-      <RouteLink href="/" rightArrow>
+      <RouteLink href="/recipes/category" rightArrow>
         Continue looking for recipes
       </RouteLink>
     </PageWrapper>

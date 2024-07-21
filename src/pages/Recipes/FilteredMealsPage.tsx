@@ -58,7 +58,6 @@ const FilteredMealsPage = () => {
 };
 
 const Wrapper = styled.div`
-  margin-top: 2.4rem;
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.6rem;
