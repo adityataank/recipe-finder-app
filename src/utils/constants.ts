@@ -26,10 +26,6 @@ export const DEVICE = {
   desktop: "(min-width: 1280px)",
 };
 
-// s3 image URL for the home recipe widget
-export const HOME_RECIPE_WIDGET_BACKGROUND_IMAGE =
-  "https://s3-alpha-sig.figma.com/img/708a/4a23/3e093c3541cd5e91e40d641205efdaf1?Expires=1721606400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=WzR1rVXFKGVnbTDVwGm~hPOGKgCrhZD55jIWTo1wMmPxaNPl-kHfJSPcZG04CcH5aHvqK4p5dodSxt1xcmGlPPvEi98-f5kt87f340oZEXM~LdtY8fPYTA2Jiz1u-EXbhfrqrDR-X0yNvQbNlIw4sfiCtm9LITKrwKKlaj38qlo1Hy-lb~Ed~A98aaNb7UaWN7K8wA1nwGLC~bdjH3Wy3OUeSZGTJJZzZvNXK93Fp6x4AdXReIhG9ADu6cC4Y8dfNar7e4B5KO196VdmjsGqQw20IYhA~FX8tbgqawfQumB8tGbBVKSrJ80e5hfjFz4zOx4gy10Kbeph~V58Z04~Tg__";
-
 // constant z-index value used for Modal overlays
 export const OVERLAY_Z_INDEX = 99;
 

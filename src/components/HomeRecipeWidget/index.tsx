@@ -1,18 +1,15 @@
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 import Button from "../UI/Button";
 import FlexBox from "../UI/FlexBox";
 import Headline from "../UI/Headline";
-
-import {
-  DEVICE,
-  HOME_RECIPE_WIDGET_BACKGROUND_IMAGE,
-} from "../../utils/constants";
 import Image from "../UI/Image";
-import { useNavigate } from "react-router-dom";
 
-const TEMP_IMAGE =
-  "https://s3-alpha-sig.figma.com/img/8f76/ce19/777b8ffd0e6987f13822a8a3600f922b?Expires=1721606400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=BaP-8ATAc1MrskMmbRjWztnhUw~1inUlJ3FPviRtNfCe-VbHBmHLNyCDxq4DRMUzazABWV0hlh30l3esG6OzVLR5GXYEid5mt2P5nilTNI8CwCas~O8NyB8wD~FcpwIiVSWDE3~EPckUmi5Nc~MRNmFa80ylsDbJsvXxttkUseTA~ZYv0qxl4D4wimo6WflIGBGdfP4Eb8t1GfaPu7q0RUsWrZ~zuQvaQey3YsdFgiJjHNg-Hjg92KqMqrr4C5qLWAoWVzewkwz63ovmZJyJfsrJFi89mvj1jIMS37QHd9KrGipbBic6-xAiGLI0VMR8ntxpsG5Vpvac1kdCztBNSg__";
+import { DEVICE } from "../../utils/constants";
+
+import BackgroundImage from "../../assets/home-widget-bg.png";
+import DishImage from "../../assets/home-widget-dish.png";
 
 const HomeRecipeWidget = () => {
   const navigate = useNavigate();
@@ -42,7 +39,7 @@ const HomeRecipeWidget = () => {
         </Content>
       </SubWrapper>
       <ImageWrapper>
-        <Image src={TEMP_IMAGE} width="12.6rem" height="10.9rem" alt="dish" />
+        <Image src={DishImage} width="12.6rem" height="10.9rem" alt="dish" />
       </ImageWrapper>
     </Wrapper>
   );
@@ -69,13 +66,10 @@ const SubWrapper = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
-    background: url(${HOME_RECIPE_WIDGET_BACKGROUND_IMAGE}) no-repeat center
-      center;
+    background: url(${BackgroundImage}) no-repeat center center;
     background-size: cover;
-    transform: rotate(-180deg) scale(2);
     transform-origin: center;
     background-color: #f9fbfeb2;
-    background-blend-mode: color-burn;
   }
   @media ${DEVICE.tablet} {
     padding: 4rem;
@@ -102,7 +96,7 @@ const ImageWrapper = styled.div`
     top: 16.6rem;
   }
   @media (min-width: 710px) {
-  right: 7rem;
+    right: 7rem;
     img {
       transform: scale(1.8);
     }
