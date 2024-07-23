@@ -8,8 +8,8 @@ import Image from "../UI/Image";
 
 import { DEVICE } from "../../utils/constants";
 
-import BackgroundImage from "../../assets/home-widget-bg.png";
-import DishImage from "../../assets/home-widget-dish.png";
+import BackgroundImage from "../../assets/home-widget-bg.webp";
+import DishImage from "../../assets/home-widget-dish.webp";
 
 const HomeRecipeWidget = () => {
   const navigate = useNavigate();
