@@ -15,6 +15,7 @@ import {
 } from "../../styles/meal-card";
 import { BaseText, LargeText } from "../../styles/text";
 import { MealProps, TagProps } from "../../utils/component-interfaces";
+import { Analytics } from "../../lib/analytics";
 
 interface MealCardProps {
   data: MealProps;
@@ -59,12 +60,18 @@ const MealCard = ({ data }: MealCardProps) => {
     idMeal: id,
   } = data ?? {};
 
+  const handleClick = () => {
+    Analytics.track("meal-card-click", {
+      recipe_name: name,
+    });
+  };
+
   const recipeDetailPageRoute = encodeURI(
     `/recipes/category/${category}/detail/${id}`
   );
 
   return (
-    <CardWrapper to={recipeDetailPageRoute}>
+    <CardWrapper to={recipeDetailPageRoute} onClick={handleClick}>
       <DishImage src={thumbSrc} alt={name} />
       <Details name={name} tags={{ category, area }} />
     </CardWrapper>

@@ -7,6 +7,7 @@ import Headline from "../UI/Headline";
 import Image from "../UI/Image";
 
 import { DEVICE } from "../../utils/constants";
+import { Analytics } from "../../lib/analytics";
 
 import BackgroundImage from "../../assets/home-widget-bg.webp";
 import DishImage from "../../assets/home-widget-dish.webp";
@@ -15,6 +16,7 @@ const HomeRecipeWidget = () => {
   const navigate = useNavigate();
 
   const handleViewRecipe = () => {
+    Analytics.track("view-recipe-click");
     // having temporary route for now
     const tempRoute = "/recipes/category/Vegetarian/detail/53073";
     navigate(tempRoute);

@@ -1,3 +1,4 @@
+import { useLayoutEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 
 import NavBar from "../components/NavBar";
@@ -6,6 +7,7 @@ import SearchSection from "../components/SearchSection";
 import FlexBox from "../components/UI/FlexBox";
 
 import { DEVICE } from "../utils/constants";
+import { Analytics } from "../lib/analytics";
 
 const pageHeight: { [key: string]: string } = {
   home: "24rem",
@@ -16,6 +18,13 @@ const pageHeight: { [key: string]: string } = {
 function Layout() {
   const { pathname } = useLocation();
   const pageName = pathname.split("/")[1];
+
+  useLayoutEffect(() => {
+    Analytics.track("page-visit", {
+      page_name: "home page",
+    });
+  }, []);
+
   return (
     <LayoutWrapper page={pageName}>
       <NavBar />

@@ -1,22 +1,27 @@
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import Image from "../UI/Image";
 import Text from "../UI/Text";
 import FlexBox from "../UI/FlexBox";
 
 import { COLORS, DEVICE } from "../../utils/constants";
+import { Analytics } from "../../lib/analytics";
 
 import LogoIcon from "../../assets/logo.svg";
-import { useLocation } from "react-router-dom";
 
 function BrandBanner() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const pageName: string = pathname.split("/")[1];
 
+  const handleClick = () => {
+    Analytics.track("logo-click");
+    navigate("/");
+  };
+
   return (
-    <Wrapper page={pageName} onClick={() => navigate("/")}>
+    <Wrapper page={pageName} onClick={handleClick}>
       <BannerWrapper>
         <FlexBox gap="1.2rem" justify="center" align="center">
           <Image src={LogoIcon} width="4rem" height="4rem" alt="logo" />

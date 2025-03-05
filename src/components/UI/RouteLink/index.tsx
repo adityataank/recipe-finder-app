@@ -7,6 +7,7 @@ import Image from "../Image";
 
 import ArrowIcon from "../../../assets/Icons/arrow_right.svg";
 import { COLORS } from "../../../utils/constants";
+import { Analytics } from "../../../lib/analytics";
 
 interface LinkProps {
   children: React.ReactElement | string;
@@ -28,6 +29,15 @@ const RouteLink = ({
   const navigate = useNavigate();
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+    let name = "";
+    if (typeof children === "object") {
+      name = children.props.children;
+    } else {
+      name = children;
+    }
+    Analytics.track("route-link-click", {
+      link_name: name,
+    });
     if (shouldGoBack) {
       e.stopPropagation();
       e.preventDefault();

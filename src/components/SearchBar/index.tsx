@@ -6,6 +6,7 @@ import CloseIcon from "../UI/Icons/CloseIcon";
 
 import { COLORS, DEVICE, OVERLAY_Z_INDEX } from "../../utils/constants";
 import { debounce } from "../../lib/debounce";
+import { Analytics } from "../../lib/analytics";
 
 interface SearchBarProps {
   isFocused?: boolean;
@@ -28,7 +29,11 @@ const SearchBar = ({
 
   const [inputText, setInputText] = useState<string>("");
 
-  const handleFocus = () => setIsFocused(true);
+  const handleFocus = () => {
+    setIsFocused(true);
+    Analytics.track("search-recipe-focused");
+  };
+
   const handleBlur = () => {
     setIsFocused(false);
   };
@@ -37,6 +42,9 @@ const SearchBar = ({
   const debouncedHandleChange = useCallback(
     debounce((event: React.ChangeEvent<HTMLInputElement>) => {
       setQuery(event.target.value);
+      Analytics.track("recipe-searched", {
+        query: event?.target?.value,
+      });
     }, 500),
     []
   );

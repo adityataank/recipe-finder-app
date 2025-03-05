@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Text from "../UI/Text";
 
 import { AllowedTabs, COLORS, IconType } from "../../utils/constants";
+import { Analytics } from "../../lib/analytics";
 
 import RecipeIcon from "../UI/Icons/TabIcons/RecipeIcon";
 import CategoryIcon from "../UI/Icons/TabIcons/CategoryIcon";
@@ -37,6 +38,9 @@ const FilterTab = ({ text, isActive, setActiveTab }: FilterTabProps) => {
 
   const handleClick = () => {
     setActiveTab(text);
+    Analytics.track("filter-tab-click", {
+      filter: text,
+    });
   };
 
   return (

@@ -16,6 +16,8 @@ import MoreRecipes from "../../components/RecipeDetailPage/MoreRecipes";
 import { REQUEST } from "../../utils/request/request";
 import { API_ROUTES } from "../../utils/request/api-routes";
 import { COLORS, DEVICE, LOCALSTORAGE_KEYS } from "../../utils/constants";
+import { Analytics } from "../../lib/analytics";
+
 import { SmallText } from "../../styles/text";
 
 const RecipeDetailPage = () => {
@@ -79,11 +81,17 @@ const RecipeDetailPage = () => {
     getSavedRecipes: () =>
       JSON.parse(localStorage.getItem(LOCALSTORAGE_KEYS.savedRecipes) ?? "{}"),
     setSavedRecipes: (savedRecipes: []) =>
-      localStorage.setItem(LOCALSTORAGE_KEYS.savedRecipes, JSON.stringify(savedRecipes)),
+      localStorage.setItem(
+        LOCALSTORAGE_KEYS.savedRecipes,
+        JSON.stringify(savedRecipes)
+      ),
   };
 
   const goToRecipe = () => {
     if (instructionsSectionRef.current) {
+      Analytics.track("go-to-recipe-click", {
+        recipe_name: strMeal,
+      });
       instructionsSectionRef.current.scrollIntoView({
         behavior: "smooth",
         block: "start",
@@ -97,6 +105,7 @@ const RecipeDetailPage = () => {
     savedRecipes[idMeal] = recipeData;
     handleLocalStorage.setSavedRecipes(savedRecipes);
     setIsSaved(true);
+    Analytics.track('recipe-saved',{recipe_name: strMeal});
   };
 
   const removeSavedRecipe = () => {
@@ -104,7 +113,11 @@ const RecipeDetailPage = () => {
     delete savedRecipes[idMeal];
     handleLocalStorage.setSavedRecipes(savedRecipes);
     setIsSaved(false);
+    Analytics.track('recipe-unsaved',{recipe_name: strMeal});
   };
+
+  const onYTclick = () =>
+    Analytics.track("yt-link-click", { recipe_name: strMeal });
 
   const clickHandlers = {
     goToRecipe,
@@ -127,7 +140,7 @@ const RecipeDetailPage = () => {
       packed with helpful tips and visual guidance!
       <br />
       🎥
-      <a href={strYoutube} target="_blank">
+      <a href={strYoutube} target="_blank" onClick={onYTclick}>
         Youtube
       </a>
     </DescriptionTextWrapper>

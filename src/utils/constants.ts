@@ -82,3 +82,7 @@ export const COUNTRY_FLAGS: { [key: string]: string } = {
 export const LOCALSTORAGE_KEYS = {
   savedRecipes: "savedRecipes",
 };
+
+
+// ENV
+export const [DEVELOPMENT, PRODUCTION] = ["development", "production"];

@@ -7,6 +7,8 @@ import Text from "../UI/Text";
 
 import { COLORS, COUNTRY_FLAGS, DEVICE } from "../../utils/constants";
 import { MealProps } from "../../utils/component-interfaces";
+import { Analytics } from "../../lib/analytics";
+
 import { SkeletonShimmer } from "../../styles/skeleton-shimmer";
 
 interface PropsTypes {
@@ -70,18 +72,28 @@ const DataBlock = ({ data, tab, showSkeleton = false }: PropsTypes) => {
     },
   };
 
-  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
-    if(showSkeleton) {
-      e?.stopPropagation();
-      e?.preventDefault();
-    }
-  }
-
   const filterValue = ComponentMapping[tab].value;
   const route = showSkeleton ? "" : `/recipes/${tab}/${filterValue}`;
 
+  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+    if (showSkeleton) {
+      e?.stopPropagation();
+      e?.preventDefault();
+      return;
+    }
+    Analytics.track("block-card-click", {
+      tab,
+      name: filterValue,
+    });
+  };
+
   return (
-    <Wrapper to={route} height="18rem" showSkeleton={showSkeleton} onClick={handleClick}>
+    <Wrapper
+      to={route}
+      height="18rem"
+      showSkeleton={showSkeleton}
+      onClick={handleClick}
+    >
       {showSkeleton ? <></> : ComponentMapping[tab].component}
     </Wrapper>
   );

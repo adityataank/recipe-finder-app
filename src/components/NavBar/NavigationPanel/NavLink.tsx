@@ -11,6 +11,7 @@ import SavedIcon from "../../UI/Icons/NavIcons/Saved";
 import SettingsIcon from "../../UI/Icons/NavIcons/Settings";
 
 import { COLORS, DEVICE } from "../../../utils/constants";
+import { Analytics } from "../../../lib/analytics";
 
 interface NavLinkProps {
   name: string;
@@ -35,13 +36,19 @@ const NavLink = ({ name, linkKey, route }: NavLinkProps) => {
     return (linkKey === "home" && pathname === "/") || path[1] === linkKey;
   };
 
+  const handleClick = () => {
+    Analytics.track("nav-link-click", {
+      name,
+    });
+  };
+
   const toPath: string = `${route}`;
   const textColor: string = checkActiveLink()
     ? COLORS["green-600"]
     : COLORS["gray-600"];
 
   return (
-    <CustomLink to={toPath} isActive={checkActiveLink()}>
+    <CustomLink to={toPath} isActive={checkActiveLink()} onClick={handleClick}>
       <FlexBox justify="start" align="center" gap="1.2rem">
         {IconMapping[linkKey]}
         <Text
